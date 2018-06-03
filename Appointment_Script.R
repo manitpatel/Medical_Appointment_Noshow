@@ -4,11 +4,12 @@ library(readr)
 Appointment_Data <- read_csv("C:/Users/manit_patel/Downloads/Spring 18/R SCRIPTS REPOSITORY/KAGGLE PROJECTS/Medical Appointment No Shows/KaggleV2-May-2016.csv/KaggleV2-May-2016.csv")
 View(Appointment_Data)
 
-# exploring missing values####
+# exploring missing values
 
 colSums(is.na(Appointment_Data))
 
-# Dependent variable : No Show#####
+
+# Dependent variable : No Show
 
 class(Appointment_Data$`No-show`)
 
@@ -16,6 +17,7 @@ table(Appointment_Data$`No-show`)
 
 Appointment_Data$`No-show`=ifelse(Appointment_Data$`No-show`=="Yes",1,0)
 
+#converting the dependent variable into factor from character
 Appointment_Data$`No-show`=as.factor(as.character(Appointment_Data$`No-show`))
 
 
@@ -29,7 +31,7 @@ ggplot(Appointment_Data, aes(x= Appointment_Data$`No-show`, fill= Appointment_Da
 
 str(Appointment_Data)
 
-#Univariate analysis###############################
+#Univariate analysis
 
 #Gender
 table(Appointment_Data$Gender)
@@ -102,7 +104,6 @@ grid.arrange(g_Dia_1, g_Dia_2,ncol=2, top='Diabetes distribution')
 #it is clear that people with diabetes are less likely to no show
 
 
-
 #Alcoholism
 class(Appointment_Data$Alcoholism)
 table(Appointment_Data$Alcoholism)
@@ -115,8 +116,6 @@ g_Alc_2 <- ggplot(Appointment_Data, aes(x=Appointment_Data$Alcoholism, fill=Appo
 grid.arrange(g_Alc_1, g_Alc_2,ncol=2, top='Alcoholism distribution')
 
 # it is clear that alcoholism doesnt seem to be related with the no showing of the appointment
-
-
 
 
 #Handcap
@@ -150,11 +149,7 @@ grid.arrange(g_SMS_1, g_SMS_2,ncol=2, top='SMS distribution')
 
 
 
-
-
-
-
-############## Splitting the Data Set ##############
+### Splitting the Data Set ####
 ratio = sample(1:nrow(Appointment_Data), size = 0.4*nrow(Appointment_Data))
 Test = Appointment_Data[ratio,] #Test dataset 40% of total
 Training = Appointment_Data[-ratio,] #Train dataset 75% of total
@@ -162,7 +157,7 @@ Training = Appointment_Data[-ratio,] #Train dataset 75% of total
 
 
 
-###### MODEL 1 : LOGISTIC REGRESSION ######################################
+#### MODEL 1 : LOGISTIC REGRESSION ####
 attach(Training)
 str(Training)
 
